@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  AuthenticationDb:
+    image: postgres
+
+  StoreDb:
+    image: mongo
+
+  pgadmin:
+    image: dpage/pgadmin4  
+
+  portainer:
+    image: portainer/portainer-ce
+
+  dichothue.authenticationservice:
+    image: ${DOCKER_REGISTRY-}dichothue.authenticationservice
+    build:
+      context: .
+      dockerfile: DiChoThue.AuthenticationService/Dockerfile
+
+  dichothue.storeservice:
+    image: ${DOCKER_REGISTRY-}dichothue.storeservice
+    build:
+      context: .
+      dockerfile: DiChoThue.StoreService/Dockerfile
+
+  dichothue.uploadfileservice:
+    image: ${DOCKER_REGISTRY-}dichothue.uploadfileservice
+    build:
+        context: .
+        dockerfile: DiChoThue.UploadFile/Dockerfile
+
+  apigetways.service:
+    image: ${DOCKER_REGISTRY-}apigetways.service
+    build:
+        context: .
+        dockerfile: ApiGetWays/Dockerfile
+
+ 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+
+volumes:
+  mongo_data:
+  postgres_data:
+  pgadmin_data:
+  portainer_data:
+  elasticsearch-data:

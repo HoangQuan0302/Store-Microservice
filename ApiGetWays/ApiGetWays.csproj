@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\DiChoThue-ServerSide</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="ApiGetWays.Local.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ApiGetWays.Local.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Ocelot" Version="17.0.0" />
+    <PackageReference Include="Ocelot.Cache.CacheManager" Version="17.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,97 @@
+version: '3.4'
+
+services:
+  AuthenticationDb:
+    container_name: AuthenticationDb
+    environment:
+       -   POSTGRES_USER=admin
+       -   POSTGRES_PASSWORD=Admin1234
+       -   POSTGRES_DB=AuthenticationDb
+    restart: always
+    ports:
+            - "5432:5432"
+    volumes:
+        - postgres_data:/var/lib/postgresql/data/
+
+  StoreDb:
+    container_name: StoreDb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=quanvh.dev@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=Admin1234
+    restart: always
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+        - xpack.monitoring.enabled=true
+        - xpack.watcher.enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - discovery.type=single-node
+    ports:
+        - "9200:9200"
+    volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data   
+
+  dichothue.authenticationservice:
+    container_name: dichothue.authenticationservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=AuthenticationDb;Port=5432;Database=AuthenticationDb;Username=admin;Password=Admin1234"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+      - AuthenticationDb
+    ports:
+      - "8005:80"
+
+  dichothue.storeservice:
+    container_name: dichothue.storeservice
+    environment:
+      -  ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://StoreDb:27017"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+      - StoreDb
+    ports:
+      - "8000:80"
+
+
+  dichothue.uploadfileservice:
+    container_name: dichothue.uploadfileservice
+    environment:
+      -  ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5001:80"
+
+
+  apigetways.service:
+    container_name: apigetways.service
+    environment:
+      -  ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - dichothue.storeservice
+    ports:
+      - "8010:80"
+

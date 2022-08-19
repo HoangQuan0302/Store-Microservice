@@ -1,0 +1,105 @@
+{
+  "Routes": [
+    //Stores Services API
+    {
+      "DownstreamPathTemplate": "/api/Store/UserId={id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Store/UserId={id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Store/RegisterStore",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Store/RegisterStore",
+      "UpstreamHttpMethod": [ "POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/GetAllProduct",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/GetAllProduct",
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/ProductId={id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/ProductId={id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/StoreId={storeId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/StoreId={storeId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/Category={category}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/Category={category}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/CreateProduct",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/CreateProduct",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8000"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/{id}",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5010"
+  }
+}
